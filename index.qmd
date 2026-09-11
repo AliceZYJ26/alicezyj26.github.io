@@ -1,7 +1,9 @@
 ---
 title: "Alice website"
+
+about:
+  template: jolla
+  image: images/picsnow.jpg
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+I grew up in Chengdu, China before earning my bachelor's degree in Mathematics with specialization in Statistics and Data science at University of Macau. Prior to joining the MDS program, I worked as a data analyst where I focused on investment and insurance. After completing MDS, I am hoping to work as a machine learning engenieer. 

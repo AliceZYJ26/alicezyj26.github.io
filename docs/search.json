@@ -1,16 +1,51 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Alice website",
+    "objectID": "posts/first-weeks/index.html",
+    "href": "posts/first-weeks/index.html",
+    "title": "My first weeks in MDS",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "Orientation day on campus."
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "My first weeks in MDS\n\n\n\n\n\n\n\n\nSep 11, 2026\n\n\nYour Name\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site"
+    "text": "I grew up in Chengdu, China before earning my bachelor’s degree in Mathematics with specialization in Statistics and Data science at University of Macau. Prior to joining the MDS program, I worked as a data analyst where I focused on investment and insurance."
+  },
+  {
+    "objectID": "about.html#background",
+    "href": "about.html#background",
+    "title": "About",
+    "section": "",
+    "text": "I grew up in Chengdu, China before earning my bachelor’s degree in Mathematics with specialization in Statistics and Data science at University of Macau. Prior to joining the MDS program, I worked as a data analyst where I focused on investment and insurance."
+  },
+  {
+    "objectID": "about.html#why-data-science",
+    "href": "about.html#why-data-science",
+    "title": "About",
+    "section": "Why Data Science",
+    "text": "Why Data Science\nThrough MDS, I am hoping to build a rigorous foundation in machine learning and data engineering to solve complex real-world problems."
+  },
+  {
+    "objectID": "about.html#outside-data-science",
+    "href": "about.html#outside-data-science",
+    "title": "About",
+    "section": "Outside Data Science",
+    "text": "Outside Data Science\nI like do snowboarding and ice skating in the weekend."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Alice website",
+    "section": "",
+    "text": "I grew up in Chengdu, China before earning my bachelor’s degree in Mathematics with specialization in Statistics and Data science at University of Macau. Prior to joining the MDS program, I worked as a data analyst where I focused on investment and insurance. After completing MDS, I am hoping to work as a machine learning engenieer."
   }
 ]

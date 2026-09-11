@@ -1,5 +1,11 @@
 ---
 title: "About"
 ---
+## Background
+ I grew up in Chengdu, China before earning my bachelor's degree in Mathematics with specialization in Statistics and Data science at University of Macau. Prior to joining the MDS program, I worked as a data analyst where I focused on investment and insurance. 
 
-About this site
+## Why Data Science
+Through MDS, I am hoping to build a rigorous foundation in machine learning and data engineering to solve complex real-world problems.
+
+## Outside Data Science
+I like do snowboarding and ice skating in the weekend.
