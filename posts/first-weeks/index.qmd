@@ -1,6 +1,6 @@
 ---
 title: "My first weeks in MDS"
-author: "Your Name"
+author: "Alice"
 date: 2026-09-11
 ---
 
