@@ -39,7 +39,7 @@
     "href": "posts/penguin-flipper-mass/index.html#findings",
     "title": "Do penguins with longer flippers weigh more?",
     "section": "Findings",
-    "text": "Findings\nPenguins with longer flippers generally have greater body mass in this sample. Gentoo penguins tend to have longer flippers and greater body mass than Adelie and Chinstrap penguins.\nThe overall pattern partly reflects differences between species. This plot shows an association; it does not establish that longer flippers cause greater body mass."
+    "text": "Findings\nPenguins with longer flippers generally have greater body mass in this sample. Gentoo penguins tend to have longer flippers and greater body mass than Adelie and Chinstrap penguins.\nThe overall pattern partly reflects differences between species. This plot shows an association; it does not establish that longer flippers cause greater body mass.\nThe data were collected by Dr. Kristen Gorman and Palmer Station Antarctica LTER and are available under the CC0 licence.\nDataset package citation: Horst, A. M., Hill, A. P., and Gorman, K. B.(2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. https://doi.org/10.5281/zenodo.3960218."
   },
   {
     "objectID": "posts/first-weeks/index.html",
@@ -123,6 +123,6 @@
     "href": "posts/penguin-body-mass/index.html#findings",
     "title": "How does penguin body mass differ by species?",
     "section": "Findings",
-    "text": "Findings\nGentoo penguins have the highest average body mass in this dataset. Adelie and Chinstrap penguins have more similar average body masses.\nThese averages describe the sampled penguins. The chart does not show variation within each species or account for differences in sex or island.\nThe plotting code uses the summary table you already calculated:\n\nax.bar(…) draws one bar per species.\nAxis labels identify the categories and measurement units.\nfig-cap adds a caption.\nThe fig- label identifies this output as a figure.\necho: true explicitly keeps the code visible."
+    "text": "Findings\nGentoo penguins have the highest average body mass in this dataset. Adelie and Chinstrap penguins have more similar average body masses.\nThese averages describe the sampled penguins. The chart does not show variation within each species or account for differences in sex or island.\nThe plotting code uses the summary table you already calculated:\n\nax.bar(…) draws one bar per species.\nAxis labels identify the categories and measurement units.\nfig-cap adds a caption.\nThe fig- label identifies this output as a figure.\necho: true explicitly keeps the code visible.\n\nThe data were collected by Dr. Kristen Gorman and Palmer Station Antarctica LTER and are available under the CC0 licence.\nDataset package citation: Horst, A. M., Hill, A. P., and Gorman, K. B.(2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. https://doi.org/10.5281/zenodo.3960218."
   }
 ]

@@ -9,8 +9,7 @@ jupyter: python3
 
 How does average body mass differ between penguin species?
 
-Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/),
-provided through the Python `palmerpenguins` package.
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/), provided through the Python `palmerpenguins` package.
 
 ## Load and inspect the data
 
@@ -74,8 +73,7 @@ plt.show()
 Gentoo penguins have the highest average body mass in this dataset.
 Adelie and Chinstrap penguins have more similar average body masses.
 
-These averages describe the sampled penguins. The chart does not show
-variation within each species or account for differences in sex or island.
+These averages describe the sampled penguins. The chart does not show variation within each species or account for differences in sex or island.
 
 The plotting code uses the summary table you already calculated:
 
@@ -84,3 +82,7 @@ The plotting code uses the summary table you already calculated:
 - fig-cap adds a caption.
 - The fig- label identifies this output as a figure.
 - echo: true explicitly keeps the code visible.
+
+The data were collected by Dr. Kristen Gorman and Palmer Station Antarctica LTER and are available under the [CC0 licence](https://creativecommons.org/publicdomain/zero/1.0/).
+
+Dataset package citation: Horst, A. M., Hill, A. P., and Gorman, K. B.(2020). *palmerpenguins: Palmer Archipelago (Antarctica) penguin data*. [https://doi.org/10.5281/zenodo.3960218](https://doi.org/10.5281/zenodo.3960218).

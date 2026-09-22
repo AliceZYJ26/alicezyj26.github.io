@@ -68,3 +68,7 @@ Penguins with longer flippers generally have greater body mass in this sample. G
 
 The overall pattern partly reflects differences between species.
 This plot shows an association; it does not establish that longer flippers cause greater body mass.
+
+The data were collected by Dr. Kristen Gorman and Palmer Station Antarctica LTER and are available under the [CC0 licence](https://creativecommons.org/publicdomain/zero/1.0/).
+
+Dataset package citation: Horst, A. M., Hill, A. P., and Gorman, K. B.(2020). *palmerpenguins: Palmer Archipelago (Antarctica) penguin data*. [https://doi.org/10.5281/zenodo.3960218](https://doi.org/10.5281/zenodo.3960218).
