@@ -1,0 +1,70 @@
+---
+title: "Do penguins with longer flippers weigh more?"
+author: "Alice"
+date: "2026-09-21"
+engine: knitr
+---
+
+## Question
+
+How does flipper length relate to body mass, and does the relationship look similar across penguin species?
+
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/), provided through the R `palmerpenguins` package.
+
+## Load and inspect the data
+
+```{r}
+#| label: load-r-data
+#| message: false
+#| warning: false
+
+library(palmerpenguins)
+library(ggplot2)
+
+head(penguins)
+summary(penguins[c("flipper_length_mm", "body_mass_g")])
+```
+
+## Prepare the measurements
+
+I remove rows missing either measurement so that each plotted penguin has both a flipper length and a body mass.
+
+```{r}
+#| label: prepare-r-data
+
+keep <- complete.cases(penguins[c("flipper_length_mm", "body_mass_g")])
+penguins_clean <- penguins[keep, ]
+
+data.frame(
+    original_rows = nrow(penguins),
+    retained_rows = nrow(penguins_clean),
+    removed_rows = sum(!keep)
+)
+```
+
+## Plot the relationship
+
+```{r}
+#| label: fig-flipper-mass
+#| fig-cap: "Penguin body mass versus flipper length, coloured by species."
+#| echo: true
+
+ggplot(
+    penguins_clean,
+    aes(x = flipper_length_mm, y = body_mass_g, colour = species)
+) +
+  geom_point(alpha = 0.7) +
+  labs(
+    x = "Flipper length (mm)",
+    y = "Body mass (g)",
+    colour = "Species"
+  ) +
+  theme_minimal()
+```
+
+## Findings
+
+Penguins with longer flippers generally have greater body mass in this sample. Gentoo penguins tend to have longer flippers and greater body mass than Adelie and Chinstrap penguins.
+
+The overall pattern partly reflects differences between species.
+This plot shows an association; it does not establish that longer flippers cause greater body mass.
