@@ -1,0 +1,86 @@
+---
+title: "How does penguin body mass differ by species?"
+author: "Alice"
+date: "2026-09-21"
+jupyter: python3
+---
+
+## Question
+
+How does average body mass differ between penguin species?
+
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/),
+provided through the Python `palmerpenguins` package.
+
+## Load and inspect the data
+
+```{python}
+#| label: load-data
+
+from palmerpenguins import load_penguins
+
+penguins = load_penguins()
+penguins.head()
+
+```
+ 
+## Compare average body mass
+I exclude penguins with missing species or body mass before calculating the number of observations and average body mass for each species.
+
+```{python}
+#| label: summarize-body-mass
+
+penguins_clean = penguins.dropna(subset=["species", "body_mass_g"])
+
+summary = (
+    penguins_clean.groupby("species")["body_mass_g"]
+    .agg(count="count", mean_mass_g="mean")
+    .round(1)
+)
+
+summary
+```
+
+Here’s what the code does:
+
+- dropna(...) removes rows missing values needed for this analysis.
+- groupby("species") separates the observations by species.
+- .agg(...) calculates each species’ count and mean body mass.
+- .round(1) rounds the results to one decimal place.
+- summary displays the resulting table.
+
+ ## Visualize the comparison
+
+The chart below compares average body mass across species.
+
+```{python}
+#| label: fig-body-mass
+#| fig-cap: "Average body mass by penguin species, excluding missing measurements."
+#| echo: true
+
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(figsize=(6, 4))
+ax.bar(summary.index, summary["mean_mass_g"])
+ax.set_xlabel("Species")
+ax.set_ylabel("Average body mass (g)")
+ax.set_title("Average penguin body mass by species")
+fig.tight_layout()
+plt.show()
+```
+
+## Findings
+
+Gentoo penguins have the highest average body mass in this dataset.
+Adelie and Chinstrap penguins have more similar average body masses.
+
+These averages describe the sampled penguins. The chart does not show
+variation within each species or account for differences in sex or island.
+
+The plotting code uses the summary table you already calculated:
+
+- ax.bar(...) draws one bar per species.
+- Axis labels identify the categories and measurement units.
+- fig-cap adds a caption.
+- The fig- label identifies this output as a figure.
+- echo: true explicitly keeps the code visible.

@@ -1,5 +1,47 @@
 [
   {
+    "objectID": "posts/penguin-flipper-mass/index.html",
+    "href": "posts/penguin-flipper-mass/index.html",
+    "title": "Do penguins with longer flippers weigh more?",
+    "section": "",
+    "text": "How does flipper length relate to body mass, and does the relationship look similar across penguin species?\nData: Palmer Penguins, provided through the R palmerpenguins package."
+  },
+  {
+    "objectID": "posts/penguin-flipper-mass/index.html#question",
+    "href": "posts/penguin-flipper-mass/index.html#question",
+    "title": "Do penguins with longer flippers weigh more?",
+    "section": "",
+    "text": "How does flipper length relate to body mass, and does the relationship look similar across penguin species?\nData: Palmer Penguins, provided through the R palmerpenguins package."
+  },
+  {
+    "objectID": "posts/penguin-flipper-mass/index.html#load-and-inspect-the-data",
+    "href": "posts/penguin-flipper-mass/index.html#load-and-inspect-the-data",
+    "title": "Do penguins with longer flippers weigh more?",
+    "section": "Load and inspect the data",
+    "text": "Load and inspect the data\n\nlibrary(palmerpenguins)\nlibrary(ggplot2)\n\nhead(penguins)\n\n  species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\n1  Adelie Torgersen           39.1          18.7               181        3750\n2  Adelie Torgersen           39.5          17.4               186        3800\n3  Adelie Torgersen           40.3          18.0               195        3250\n4  Adelie Torgersen             NA            NA                NA          NA\n5  Adelie Torgersen           36.7          19.3               193        3450\n6  Adelie Torgersen           39.3          20.6               190        3650\n     sex year\n1   male 2007\n2 female 2007\n3 female 2007\n4   &lt;NA&gt; 2007\n5 female 2007\n6   male 2007\n\nsummary(penguins[c(\"flipper_length_mm\", \"body_mass_g\")])\n\n flipper_length_mm  body_mass_g  \n Min.   :172.0     Min.   :2700  \n 1st Qu.:190.0     1st Qu.:3550  \n Median :197.0     Median :4050  \n Mean   :200.9     Mean   :4202  \n 3rd Qu.:213.0     3rd Qu.:4750  \n Max.   :231.0     Max.   :6300  \n NAs    :2         NAs    :2"
+  },
+  {
+    "objectID": "posts/penguin-flipper-mass/index.html#prepare-the-measurements",
+    "href": "posts/penguin-flipper-mass/index.html#prepare-the-measurements",
+    "title": "Do penguins with longer flippers weigh more?",
+    "section": "Prepare the measurements",
+    "text": "Prepare the measurements\nI remove rows missing either measurement so that each plotted penguin has both a flipper length and a body mass.\n\nkeep &lt;- complete.cases(penguins[c(\"flipper_length_mm\", \"body_mass_g\")])\npenguins_clean &lt;- penguins[keep, ]\n\ndata.frame(\n    original_rows = nrow(penguins),\n    retained_rows = nrow(penguins_clean),\n    removed_rows = sum(!keep)\n)\n\n  original_rows retained_rows removed_rows\n1           344           342            2"
+  },
+  {
+    "objectID": "posts/penguin-flipper-mass/index.html#plot-the-relationship",
+    "href": "posts/penguin-flipper-mass/index.html#plot-the-relationship",
+    "title": "Do penguins with longer flippers weigh more?",
+    "section": "Plot the relationship",
+    "text": "Plot the relationship\n\nggplot(\n    penguins_clean,\n    aes(x = flipper_length_mm, y = body_mass_g, colour = species)\n) +\n  geom_point(alpha = 0.7) +\n  labs(\n    x = \"Flipper length (mm)\",\n    y = \"Body mass (g)\",\n    colour = \"Species\"\n  ) +\n  theme_minimal()\n\n\n\n\n\n\n\nFigure 1: Penguin body mass versus flipper length, coloured by species."
+  },
+  {
+    "objectID": "posts/penguin-flipper-mass/index.html#findings",
+    "href": "posts/penguin-flipper-mass/index.html#findings",
+    "title": "Do penguins with longer flippers weigh more?",
+    "section": "Findings",
+    "text": "Findings\nPenguins with longer flippers generally have greater body mass in this sample. Gentoo penguins tend to have longer flippers and greater body mass than Adelie and Chinstrap penguins.\nThe overall pattern partly reflects differences between species. This plot shows an association; it does not establish that longer flippers cause greater body mass."
+  },
+  {
     "objectID": "posts/first-weeks/index.html",
     "href": "posts/first-weeks/index.html",
     "title": "My first weeks in MDS",
@@ -11,7 +53,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "My first weeks in MDS\n\n\n\n\n\n\n\n\nSep 11, 2026\n\n\nAlice\n\n\n\n\n\nNo matching items"
+    "text": "How does penguin body mass differ by species?\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nAlice\n\n\n\n\n\n\n\n\n\n\n\n\nDo penguins with longer flippers weigh more?\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nAlice\n\n\n\n\n\n\n\n\n\n\n\n\nMy first weeks in MDS\n\n\n\n\n\n\n\n\nSep 11, 2026\n\n\nAlice\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -47,5 +89,40 @@
     "title": "Alice website",
     "section": "",
     "text": "I grew up in Chengdu, China before earning my bachelor’s degree in Mathematics with specialization in Statistics and Data science at University of Macau. Prior to joining the MDS program, I worked as a data analyst where I focused on investment and insurance. After completing MDS, I am hoping to work as a machine learning engenieer."
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html",
+    "href": "posts/penguin-body-mass/index.html",
+    "title": "How does penguin body mass differ by species?",
+    "section": "",
+    "text": "How does average body mass differ between penguin species?\nData: Palmer Penguins, provided through the Python palmerpenguins package."
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html#question",
+    "href": "posts/penguin-body-mass/index.html#question",
+    "title": "How does penguin body mass differ by species?",
+    "section": "",
+    "text": "How does average body mass differ between penguin species?\nData: Palmer Penguins, provided through the Python palmerpenguins package."
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html#load-and-inspect-the-data",
+    "href": "posts/penguin-body-mass/index.html#load-and-inspect-the-data",
+    "title": "How does penguin body mass differ by species?",
+    "section": "Load and inspect the data",
+    "text": "Load and inspect the data\n\nfrom palmerpenguins import load_penguins\n\npenguins = load_penguins()\npenguins.head()\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\n0\nAdelie\nTorgersen\n39.1\n18.7\n181.0\n3750.0\nmale\n2007\n\n\n1\nAdelie\nTorgersen\n39.5\n17.4\n186.0\n3800.0\nfemale\n2007\n\n\n2\nAdelie\nTorgersen\n40.3\n18.0\n195.0\n3250.0\nfemale\n2007\n\n\n3\nAdelie\nTorgersen\nNaN\nNaN\nNaN\nNaN\nNaN\n2007\n\n\n4\nAdelie\nTorgersen\n36.7\n19.3\n193.0\n3450.0\nfemale\n2007"
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html#compare-average-body-mass",
+    "href": "posts/penguin-body-mass/index.html#compare-average-body-mass",
+    "title": "How does penguin body mass differ by species?",
+    "section": "Compare average body mass",
+    "text": "Compare average body mass\nI exclude penguins with missing species or body mass before calculating the number of observations and average body mass for each species.\n\npenguins_clean = penguins.dropna(subset=[\"species\", \"body_mass_g\"])\n\nsummary = (\n    penguins_clean.groupby(\"species\")[\"body_mass_g\"]\n    .agg(count=\"count\", mean_mass_g=\"mean\")\n    .round(1)\n)\n\nsummary\n\n\n\n\n\n\n\n\ncount\nmean_mass_g\n\n\nspecies\n\n\n\n\n\n\nAdelie\n151\n3700.7\n\n\nChinstrap\n68\n3733.1\n\n\nGentoo\n123\n5076.0\n\n\n\n\n\n\n\nHere’s what the code does:\n\ndropna(…) removes rows missing values needed for this analysis.\ngroupby(“species”) separates the observations by species.\n.agg(…) calculates each species’ count and mean body mass.\n.round(1) rounds the results to one decimal place.\nsummary displays the resulting table.\n\n## Visualize the comparison\nThe chart below compares average body mass across species.\n\nimport matplotlib.pyplot as plt\n\nfig, ax = plt.subplots(figsize=(6, 4))\nax.bar(summary.index, summary[\"mean_mass_g\"])\nax.set_xlabel(\"Species\")\nax.set_ylabel(\"Average body mass (g)\")\nax.set_title(\"Average penguin body mass by species\")\nfig.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Average body mass by penguin species, excluding missing measurements."
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html#findings",
+    "href": "posts/penguin-body-mass/index.html#findings",
+    "title": "How does penguin body mass differ by species?",
+    "section": "Findings",
+    "text": "Findings\nGentoo penguins have the highest average body mass in this dataset. Adelie and Chinstrap penguins have more similar average body masses.\nThese averages describe the sampled penguins. The chart does not show variation within each species or account for differences in sex or island.\nThe plotting code uses the summary table you already calculated:\n\nax.bar(…) draws one bar per species.\nAxis labels identify the categories and measurement units.\nfig-cap adds a caption.\nThe fig- label identifies this output as a figure.\necho: true explicitly keeps the code visible."
   }
 ]
