@@ -1,5 +1,103 @@
 [
   {
+    "objectID": "posts/r-and-python/index.html",
+    "href": "posts/r-and-python/index.html",
+    "title": "Penguin body mass with Python and R",
+    "section": "",
+    "text": "library(reticulate)\nimport os\nimport sys\nfrom pathlib import Path\n\nproject_venv = Path(os.environ[\"QUARTO_PROJECT_DIR\"]) / \".venv\"\n\nprint(\"Python executable:\", sys.executable)\n\nPython executable: C:\\Users\\alice\\mds\\521\\MILEST~2\\ALICEZ~1.IO\\VENV~1\\Scripts\\python.exe\n\nprint(\"Using project .venv:\", os.path.samefile(sys.prefix, project_venv))\n\nUsing project .venv: True\n## Comparing penguin body mass\nI use Python to calculate average body mass for each penguin species, then pass the summary to R to visualize the comparison.\nData: Palmer Penguins, provided through the Python palmerpenguins package.\nThen add a Python chunk to load the data:\nfrom palmerpenguins import load_penguins\n\npenguins = load_penguins()\npenguins.head()\n\n  species     island  bill_length_mm  ...  body_mass_g     sex  year\n0  Adelie  Torgersen            39.1  ...       3750.0    male  2007\n1  Adelie  Torgersen            39.5  ...       3800.0  female  2007\n2  Adelie  Torgersen            40.3  ...       3250.0  female  2007\n3  Adelie  Torgersen             NaN  ...          NaN     NaN  2007\n4  Adelie  Torgersen            36.7  ...       3450.0  female  2007\n\n[5 rows x 8 columns]\npenguins stores the dataset. .head() displays the first five rows so you can inspect its columns.\nNext, add a second Python chunk:\npenguins_clean = penguins.dropna(subset=[\"species\", \"body_mass_g\"])\n\nmass_summary = (\n    penguins_clean.groupby(\"species\", as_index=False)\n    .agg(mean_mass_g=(\"body_mass_g\", \"mean\"))\n)\n\nmass_summary\n\n     species  mean_mass_g\n0     Adelie  3700.662252\n1  Chinstrap  3733.088235\n2     Gentoo  5076.016260\nHere’s what it does:"
+  },
+  {
+    "objectID": "posts/r-and-python/index.html#visualizing-the-summary-in-r",
+    "href": "posts/r-and-python/index.html#visualizing-the-summary-in-r",
+    "title": "Penguin body mass with Python and R",
+    "section": "Visualizing the summary in R",
+    "text": "Visualizing the summary in R\nI pass the summary calculated in Python to R using reticulate.\n\nmass_summary_r &lt;- py$mass_summary\nmass_summary_r\n\n    species mean_mass_g\n1    Adelie    3700.662\n2 Chinstrap    3733.088\n3    Gentoo    5076.016\n\n\nThis is the key bonus step:\n\npy$mass_summary accesses the object you created in Python.\nReticulate converts the Python pandas DataFrame into an R data frame.\n&lt;- assigns it to the R object mass_summary_r.\n\nNow add a plot using that transferred data:\n\nlibrary(ggplot2)\n\nggplot(mass_summary_r, aes(x = species, y = mean_mass_g)) +\ngeom_col() +\nlabs(\n    x = \"Species\",\n    y = \"Mean body mass (g)\"\n) +\ntheme_minimal()\n\n\n\n\n\n\n\nFigure 1: Mean penguin body mass by species, calculated in Python and plotted in R.\n\n\n\n\n\ngeom_col() draws bars using your already-calculated means. R is using Python’s result here, which demonstrates the required object transfer.\nGentoo penguins had the highest average body mass in this dataset, at approximately 5,076 g. Adelie and Chinstrap penguins had similar averages, at about 3,701 g and 3,733 g, respectively. These means summarize differences between species but do not show variation among individual penguins or how much their body masses overlap."
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html",
+    "href": "posts/penguin-body-mass/index.html",
+    "title": "How does penguin body mass differ by species?",
+    "section": "",
+    "text": "How does average body mass differ between penguin species?\nData: Palmer Penguins, provided through the Python palmerpenguins package."
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html#question",
+    "href": "posts/penguin-body-mass/index.html#question",
+    "title": "How does penguin body mass differ by species?",
+    "section": "",
+    "text": "How does average body mass differ between penguin species?\nData: Palmer Penguins, provided through the Python palmerpenguins package."
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html#load-and-inspect-the-data",
+    "href": "posts/penguin-body-mass/index.html#load-and-inspect-the-data",
+    "title": "How does penguin body mass differ by species?",
+    "section": "Load and inspect the data",
+    "text": "Load and inspect the data\n\nfrom palmerpenguins import load_penguins\n\npenguins = load_penguins()\npenguins.head()\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\n0\nAdelie\nTorgersen\n39.1\n18.7\n181.0\n3750.0\nmale\n2007\n\n\n1\nAdelie\nTorgersen\n39.5\n17.4\n186.0\n3800.0\nfemale\n2007\n\n\n2\nAdelie\nTorgersen\n40.3\n18.0\n195.0\n3250.0\nfemale\n2007\n\n\n3\nAdelie\nTorgersen\nNaN\nNaN\nNaN\nNaN\nNaN\n2007\n\n\n4\nAdelie\nTorgersen\n36.7\n19.3\n193.0\n3450.0\nfemale\n2007"
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html#compare-average-body-mass",
+    "href": "posts/penguin-body-mass/index.html#compare-average-body-mass",
+    "title": "How does penguin body mass differ by species?",
+    "section": "Compare average body mass",
+    "text": "Compare average body mass\nI exclude penguins with missing species or body mass before calculating the number of observations and average body mass for each species.\n\npenguins_clean = penguins.dropna(subset=[\"species\", \"body_mass_g\"])\n\nsummary = (\n    penguins_clean.groupby(\"species\")[\"body_mass_g\"]\n    .agg(count=\"count\", mean_mass_g=\"mean\")\n    .round(1)\n)\n\nsummary\n\n\n\n\n\n\n\n\ncount\nmean_mass_g\n\n\nspecies\n\n\n\n\n\n\nAdelie\n151\n3700.7\n\n\nChinstrap\n68\n3733.1\n\n\nGentoo\n123\n5076.0\n\n\n\n\n\n\n\nHere’s what the code does:\n\ndropna(…) removes rows missing values needed for this analysis.\ngroupby(“species”) separates the observations by species.\n.agg(…) calculates each species’ count and mean body mass.\n.round(1) rounds the results to one decimal place.\nsummary displays the resulting table.\n\n## Visualize the comparison\nThe chart below compares average body mass across species.\n\nimport matplotlib.pyplot as plt\n\nfig, ax = plt.subplots(figsize=(6, 4))\nax.bar(summary.index, summary[\"mean_mass_g\"])\nax.set_xlabel(\"Species\")\nax.set_ylabel(\"Average body mass (g)\")\nax.set_title(\"Average penguin body mass by species\")\nfig.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Average body mass by penguin species, excluding missing measurements."
+  },
+  {
+    "objectID": "posts/penguin-body-mass/index.html#findings",
+    "href": "posts/penguin-body-mass/index.html#findings",
+    "title": "How does penguin body mass differ by species?",
+    "section": "Findings",
+    "text": "Findings\nGentoo penguins have the highest average body mass in this dataset. Adelie and Chinstrap penguins have more similar average body masses.\nThese averages describe the sampled penguins. The chart does not show variation within each species or account for differences in sex or island.\nThe plotting code uses the summary table you already calculated:\n\nax.bar(…) draws one bar per species.\nAxis labels identify the categories and measurement units.\nfig-cap adds a caption.\nThe fig- label identifies this output as a figure.\necho: true explicitly keeps the code visible.\n\nThe data were collected by Dr. Kristen Gorman and Palmer Station Antarctica LTER and are available under the CC0 licence.\nDataset package citation: Horst, A. M., Hill, A. P., and Gorman, K. B.(2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. https://doi.org/10.5281/zenodo.3960218."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Alice website",
+    "section": "",
+    "text": "I grew up in Chengdu, China before earning my bachelor’s degree in Mathematics with specialization in Statistics and Data science at University of Macau. Prior to joining the MDS program, I worked as a data analyst where I focused on investment and insurance. After completing MDS, I am hoping to work as a machine learning engenieer."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I grew up in Chengdu, China before earning my bachelor’s degree in Mathematics with specialization in Statistics and Data science at University of Macau. Prior to joining the MDS program, I worked as a data analyst where I focused on investment and insurance."
+  },
+  {
+    "objectID": "about.html#background",
+    "href": "about.html#background",
+    "title": "About",
+    "section": "",
+    "text": "I grew up in Chengdu, China before earning my bachelor’s degree in Mathematics with specialization in Statistics and Data science at University of Macau. Prior to joining the MDS program, I worked as a data analyst where I focused on investment and insurance."
+  },
+  {
+    "objectID": "about.html#why-data-science",
+    "href": "about.html#why-data-science",
+    "title": "About",
+    "section": "Why Data Science",
+    "text": "Why Data Science\nThrough MDS, I am hoping to build a rigorous foundation in machine learning and data engineering to solve complex real-world problems."
+  },
+  {
+    "objectID": "about.html#outside-data-science",
+    "href": "about.html#outside-data-science",
+    "title": "About",
+    "section": "Outside Data Science",
+    "text": "Outside Data Science\nI like do snowboarding and ice skating in the weekend."
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Penguin body mass with Python and R\n\n\n\n\n\n\n\n\nSep 24, 2026\n\n\nAlice\n\n\n\n\n\n\n\n\n\n\n\n\nHow does penguin body mass differ by species?\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nAlice\n\n\n\n\n\n\n\n\n\n\n\n\nDo penguins with longer flippers weigh more?\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nAlice\n\n\n\n\n\n\n\n\n\n\n\n\nMy first weeks in MDS\n\n\n\n\n\n\n\n\nSep 11, 2026\n\n\nAlice\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/first-weeks/index.html",
+    "href": "posts/first-weeks/index.html",
+    "title": "My first weeks in MDS",
+    "section": "",
+    "text": "Orientation day on campus."
+  },
+  {
     "objectID": "posts/penguin-flipper-mass/index.html",
     "href": "posts/penguin-flipper-mass/index.html",
     "title": "Do penguins with longer flippers weigh more?",
@@ -40,89 +138,5 @@
     "title": "Do penguins with longer flippers weigh more?",
     "section": "Findings",
     "text": "Findings\nPenguins with longer flippers generally have greater body mass in this sample. Gentoo penguins tend to have longer flippers and greater body mass than Adelie and Chinstrap penguins.\nThe overall pattern partly reflects differences between species. This plot shows an association; it does not establish that longer flippers cause greater body mass.\nThe data were collected by Dr. Kristen Gorman and Palmer Station Antarctica LTER and are available under the CC0 licence.\nDataset package citation: Horst, A. M., Hill, A. P., and Gorman, K. B.(2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. https://doi.org/10.5281/zenodo.3960218."
-  },
-  {
-    "objectID": "posts/first-weeks/index.html",
-    "href": "posts/first-weeks/index.html",
-    "title": "My first weeks in MDS",
-    "section": "",
-    "text": "Orientation day on campus."
-  },
-  {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Blog",
-    "section": "",
-    "text": "How does penguin body mass differ by species?\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nAlice\n\n\n\n\n\n\n\n\n\n\n\n\nDo penguins with longer flippers weigh more?\n\n\n\n\n\n\n\n\nSep 21, 2026\n\n\nAlice\n\n\n\n\n\n\n\n\n\n\n\n\nMy first weeks in MDS\n\n\n\n\n\n\n\n\nSep 11, 2026\n\n\nAlice\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "I grew up in Chengdu, China before earning my bachelor’s degree in Mathematics with specialization in Statistics and Data science at University of Macau. Prior to joining the MDS program, I worked as a data analyst where I focused on investment and insurance."
-  },
-  {
-    "objectID": "about.html#background",
-    "href": "about.html#background",
-    "title": "About",
-    "section": "",
-    "text": "I grew up in Chengdu, China before earning my bachelor’s degree in Mathematics with specialization in Statistics and Data science at University of Macau. Prior to joining the MDS program, I worked as a data analyst where I focused on investment and insurance."
-  },
-  {
-    "objectID": "about.html#why-data-science",
-    "href": "about.html#why-data-science",
-    "title": "About",
-    "section": "Why Data Science",
-    "text": "Why Data Science\nThrough MDS, I am hoping to build a rigorous foundation in machine learning and data engineering to solve complex real-world problems."
-  },
-  {
-    "objectID": "about.html#outside-data-science",
-    "href": "about.html#outside-data-science",
-    "title": "About",
-    "section": "Outside Data Science",
-    "text": "Outside Data Science\nI like do snowboarding and ice skating in the weekend."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Alice website",
-    "section": "",
-    "text": "I grew up in Chengdu, China before earning my bachelor’s degree in Mathematics with specialization in Statistics and Data science at University of Macau. Prior to joining the MDS program, I worked as a data analyst where I focused on investment and insurance. After completing MDS, I am hoping to work as a machine learning engenieer."
-  },
-  {
-    "objectID": "posts/penguin-body-mass/index.html",
-    "href": "posts/penguin-body-mass/index.html",
-    "title": "How does penguin body mass differ by species?",
-    "section": "",
-    "text": "How does average body mass differ between penguin species?\nData: Palmer Penguins, provided through the Python palmerpenguins package."
-  },
-  {
-    "objectID": "posts/penguin-body-mass/index.html#question",
-    "href": "posts/penguin-body-mass/index.html#question",
-    "title": "How does penguin body mass differ by species?",
-    "section": "",
-    "text": "How does average body mass differ between penguin species?\nData: Palmer Penguins, provided through the Python palmerpenguins package."
-  },
-  {
-    "objectID": "posts/penguin-body-mass/index.html#load-and-inspect-the-data",
-    "href": "posts/penguin-body-mass/index.html#load-and-inspect-the-data",
-    "title": "How does penguin body mass differ by species?",
-    "section": "Load and inspect the data",
-    "text": "Load and inspect the data\n\nfrom palmerpenguins import load_penguins\n\npenguins = load_penguins()\npenguins.head()\n\n\n\n\n\n\n\n\nspecies\nisland\nbill_length_mm\nbill_depth_mm\nflipper_length_mm\nbody_mass_g\nsex\nyear\n\n\n\n\n0\nAdelie\nTorgersen\n39.1\n18.7\n181.0\n3750.0\nmale\n2007\n\n\n1\nAdelie\nTorgersen\n39.5\n17.4\n186.0\n3800.0\nfemale\n2007\n\n\n2\nAdelie\nTorgersen\n40.3\n18.0\n195.0\n3250.0\nfemale\n2007\n\n\n3\nAdelie\nTorgersen\nNaN\nNaN\nNaN\nNaN\nNaN\n2007\n\n\n4\nAdelie\nTorgersen\n36.7\n19.3\n193.0\n3450.0\nfemale\n2007"
-  },
-  {
-    "objectID": "posts/penguin-body-mass/index.html#compare-average-body-mass",
-    "href": "posts/penguin-body-mass/index.html#compare-average-body-mass",
-    "title": "How does penguin body mass differ by species?",
-    "section": "Compare average body mass",
-    "text": "Compare average body mass\nI exclude penguins with missing species or body mass before calculating the number of observations and average body mass for each species.\n\npenguins_clean = penguins.dropna(subset=[\"species\", \"body_mass_g\"])\n\nsummary = (\n    penguins_clean.groupby(\"species\")[\"body_mass_g\"]\n    .agg(count=\"count\", mean_mass_g=\"mean\")\n    .round(1)\n)\n\nsummary\n\n\n\n\n\n\n\n\ncount\nmean_mass_g\n\n\nspecies\n\n\n\n\n\n\nAdelie\n151\n3700.7\n\n\nChinstrap\n68\n3733.1\n\n\nGentoo\n123\n5076.0\n\n\n\n\n\n\n\nHere’s what the code does:\n\ndropna(…) removes rows missing values needed for this analysis.\ngroupby(“species”) separates the observations by species.\n.agg(…) calculates each species’ count and mean body mass.\n.round(1) rounds the results to one decimal place.\nsummary displays the resulting table.\n\n## Visualize the comparison\nThe chart below compares average body mass across species.\n\nimport matplotlib.pyplot as plt\n\nfig, ax = plt.subplots(figsize=(6, 4))\nax.bar(summary.index, summary[\"mean_mass_g\"])\nax.set_xlabel(\"Species\")\nax.set_ylabel(\"Average body mass (g)\")\nax.set_title(\"Average penguin body mass by species\")\nfig.tight_layout()\nplt.show()\n\n\n\n\n\n\n\nFigure 1: Average body mass by penguin species, excluding missing measurements."
-  },
-  {
-    "objectID": "posts/penguin-body-mass/index.html#findings",
-    "href": "posts/penguin-body-mass/index.html#findings",
-    "title": "How does penguin body mass differ by species?",
-    "section": "Findings",
-    "text": "Findings\nGentoo penguins have the highest average body mass in this dataset. Adelie and Chinstrap penguins have more similar average body masses.\nThese averages describe the sampled penguins. The chart does not show variation within each species or account for differences in sex or island.\nThe plotting code uses the summary table you already calculated:\n\nax.bar(…) draws one bar per species.\nAxis labels identify the categories and measurement units.\nfig-cap adds a caption.\nThe fig- label identifies this output as a figure.\necho: true explicitly keeps the code visible.\n\nThe data were collected by Dr. Kristen Gorman and Palmer Station Antarctica LTER and are available under the CC0 licence.\nDataset package citation: Horst, A. M., Hill, A. P., and Gorman, K. B.(2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. https://doi.org/10.5281/zenodo.3960218."
   }
 ]

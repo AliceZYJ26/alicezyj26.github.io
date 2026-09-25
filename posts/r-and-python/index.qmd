@@ -1,0 +1,112 @@
+---
+title: "Penguin body mass with Python and R"
+author: "Alice"
+date: "2026-09-24"
+engine: knitr
+---
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(reticulate)
+```
+
+```{python}
+#| label: check-python
+
+import os
+import sys
+from pathlib import Path
+
+project_venv = Path(os.environ["QUARTO_PROJECT_DIR"]) / ".venv"
+
+print("Python executable:", sys.executable)
+print("Using project .venv:", os.path.samefile(sys.prefix, project_venv))
+```
+
+ ## Comparing penguin body mass
+
+I use Python to calculate average body mass for each penguin species,
+then pass the summary to R to visualize the comparison.
+
+Data: [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/),
+provided through the Python `palmerpenguins` package.
+
+Then add a Python chunk to load the data:
+
+```{python}
+#| label: load-penguins
+
+from palmerpenguins import load_penguins
+
+penguins = load_penguins()
+penguins.head()
+```
+
+penguins stores the dataset. .head() displays the first five rows so you can inspect its columns.
+
+Next, add a second Python chunk:
+
+```{python}
+#| label: summarize-mass
+
+penguins_clean = penguins.dropna(subset=["species", "body_mass_g"])
+
+mass_summary = (
+    penguins_clean.groupby("species", as_index=False)
+    .agg(mean_mass_g=("body_mass_g", "mean"))
+)
+
+mass_summary
+```
+
+Here’s what it does:
+
+- dropna(...) excludes rows missing the values needed for this comparison.
+- groupby(...) groups penguins by species. as_index=False keeps species as a regular column, convenient for plotting
+    in R.
+
+- .agg(...) calculates mean body mass and names the result column mean_mass_g.
+
+## Visualizing the summary in R
+
+I pass the summary calculated in Python to R using reticulate.
+
+```{r}
+#| label: transfer-summary
+
+mass_summary_r <- py$mass_summary
+mass_summary_r
+```
+
+This is the key bonus step:
+
+- py$mass_summary accesses the object you created in Python.
+- Reticulate converts the Python pandas DataFrame into an R data frame.
+- <- assigns it to the R object mass_summary_r.
+
+Now add a plot using that transferred data:
+
+```{r}
+#| label: fig-mass-python-r
+#| fig-cap: "Mean penguin body mass by species, calculated in Python and plotted in R."
+
+library(ggplot2)
+
+ggplot(mass_summary_r, aes(x = species, y = mean_mass_g)) +
+geom_col() +
+labs(
+    x = "Species",
+    y = "Mean body mass (g)"
+) +
+theme_minimal()
+```
+
+geom_col() draws bars using your already-calculated means. R is using Python’s result here, which demonstrates the
+required object transfer.
+
+
+Gentoo penguins had the highest average body mass in this dataset, at approximately 5,076 g. Adelie and Chinstrap
+penguins had similar averages, at about 3,701 g and 3,733 g, respectively. These means summarize differences between
+species but do not show variation among individual penguins or how much their body masses overlap.

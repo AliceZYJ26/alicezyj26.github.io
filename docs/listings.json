@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/r-and-python/index.html",
       "/posts/penguin-body-mass/index.html",
       "/posts/penguin-flipper-mass/index.html",
       "/posts/first-weeks/index.html"

@@ -1,6 +1,7 @@
 # Alice's website
 
 This Quarto website contains personal posts and computational analyses using Python and R.
+The bonus post uses Python to calculate average penguin body mass by species, then passes the result to R through reticulate to create a plot.
 
 ## Prerequisites
 
@@ -52,7 +53,7 @@ Open the local URL printed in the terminal. Press Ctrl+C to stop the preview.
 
 ## Data
 
-Both computational posts use
+All three computational posts use
 [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/).
 
 The data comes with the Python and R `palmerpenguins` packages.
@@ -67,6 +68,9 @@ The Python version is specified in `.python-version`.
 
 R dependencies are recorded in `renv.lock`.
 `.Rprofile` and `renv/activate.R` activate the project environment.
+
+The bonus post runs R and Python together using knitr and reticulate.
+Reticulate is included in renv.lock. Python runs in the project's .venv.
 
 Run all build commands from the repository root.
 
