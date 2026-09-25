@@ -29,11 +29,8 @@ Start an R session with this repository as its working directory.
 In the R Console, run:
 
 ```r
-source("renv/activate.R")
-renv::restore()
+renv::restore(project = ".", prompt = FALSE)
 ```
-
-Accept installation prompts if shown.
 
 Return to the terminal, still at the repository root, and run:
 
