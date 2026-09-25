@@ -1,5 +1,5 @@
 ---
-title: "Do penguins with longer flippers weigh more?"
+title: "R post: Do penguins with longer flippers weigh more?"
 author: "Alice"
 date: "2026-09-21"
 engine: knitr
